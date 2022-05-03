@@ -1,5 +1,6 @@
-namespace Beathoven.Collection
+namespace Beathoven.Collection.Staff
 {
+    using Beathoven.Collection.Notes;
     using UnityEngine;
 
     public class Staff : MonoBehaviour, IStaff

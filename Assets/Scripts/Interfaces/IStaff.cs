@@ -1,8 +1,10 @@
-namespace Beathoven.Collection
+using Beathoven.Collection.Notes;
+
+namespace Beathoven.Collection.Staff
 {
     public interface IStaff
     {
-        public void RenderStaff(IMusicNote note);
+        void RenderStaff(IMusicNote note);
         void SetMusicNotesOnStaff(ICleff cleff);
     }
 

@@ -1,5 +1,5 @@
 
-namespace Beathoven.Collection
+namespace Beathoven.Collection.Notes
 {
     using Unity;
     public interface IMusicNote
