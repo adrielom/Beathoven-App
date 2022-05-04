@@ -3,7 +3,7 @@ namespace Beathoven.Collection
     public interface ICleff
     {
         void RenderCleff();
-        int initialNote { get; set; }
+        string initialNote { get; set; }
     }
 
 }

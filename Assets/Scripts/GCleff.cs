@@ -2,7 +2,7 @@ namespace Beathoven.Collection
 {
     class GCleff : ICleff
     {
-        public int initialNote { get; set; } = 1;
+        public string initialNote { get; set; } = "G";
 
         public void RenderCleff()
         {
