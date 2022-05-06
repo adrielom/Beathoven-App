@@ -1,4 +1,6 @@
-namespace Beathoven.Collection.Notes
+using Beathoven.Core.Note;
+
+namespace Beathoven.Core.Notes
 {
     public class A_Note : IMusicNote
     {
@@ -15,6 +17,8 @@ namespace Beathoven.Collection.Notes
 
         public string name { get; set; } = "A";
         public uint notePitch { get; set; }
+        public bool isAccident { get; } = false;
+        public INoteAccident noteAccident { get; set; }
 
     }
 }

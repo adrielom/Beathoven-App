@@ -1,17 +1,19 @@
-namespace Beathoven.Collection.Staff
+namespace Beathoven.Core.Staff
 {
-    using Beathoven.Collection.Notes;
+    using Beathoven.Core.Notes;
     using UnityEngine;
     using System.Collections.Generic;
     using System;
     using System.Linq;
-    using Beathoven.Collection.Cleff;
+    using Beathoven.Core.Cleff;
     using Beathoven.Utils;
 
     public class Staff : MonoBehaviour, IStaff
     {
 
         const UInt16 NOTES_ON_STAFF = 26;
+        const UInt16 START_OF_PENTAGRAM = 6;
+        const UInt16 END_OF_PENTAGRAM = 16;
         List<IMusicNote> musicNotes = new List<IMusicNote>();
         NotesSequence notesSequence = new NotesSequence();
         CleffFactory factory = new CleffFactory();
@@ -35,6 +37,19 @@ namespace Beathoven.Collection.Staff
             musicNotes = notesSequence.TraverseAndGetNotesStartingFromIndex(cleff.initialNote, NOTES_ON_STAFF);
         }
 
+        public List<IMusicNote> GetPentagramNotesList()
+        {
+            return musicNotes.GetRange(START_OF_PENTAGRAM, 10);
+        }
 
+        public List<IMusicNote> GetLowerNotesList()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<IMusicNote> GetHigherNotesList()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

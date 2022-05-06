@@ -1,4 +1,4 @@
-namespace Beathoven.Collection.Cleff
+namespace Beathoven.Core.Cleff
 {
     using Beathoven.Utils;
 

@@ -1,4 +1,4 @@
-namespace Beathoven.Collection.Notes
+namespace Beathoven.Core.Notes
 {
     public enum NotesEnumeration
     {

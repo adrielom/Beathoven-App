@@ -1,6 +1,6 @@
-namespace Beathoven.Collection.Cleff
+namespace Beathoven.Core.Cleff
 {
-    class G_Cleff : ICleff
+    class C_Cleff : ICleff
     {
         public string initialNote { get; set; } = "E";
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Beathoven.Collection.Notes
+namespace Beathoven.Core.Notes
 {
     class NotesSequence
     {
