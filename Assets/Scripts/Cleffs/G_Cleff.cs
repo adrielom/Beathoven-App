@@ -1,8 +1,8 @@
-namespace Beathoven.Collection
+namespace Beathoven.Collection.Cleff
 {
-    class GCleff : ICleff
+    class G_Cleff : ICleff
     {
-        public string initialNote { get; set; } = "G";
+        public string initialNote { get; set; } = "E";
 
         public void RenderCleff()
         {

@@ -2,6 +2,10 @@ namespace Beathoven.Collection.Notes
 {
     public class E_Note : IMusicNote
     {
+        public E_Note()
+        {
+        }
+
         public E_Note(string name, uint notePitch)
         {
             this.name = name;

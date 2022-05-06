@@ -8,6 +8,11 @@ namespace Beathoven.Collection.Notes
             this.notePitch = notePitch;
         }
 
+        public A_Note()
+        {
+
+        }
+
         public string name { get; set; } = "A";
         public uint notePitch { get; set; }
 

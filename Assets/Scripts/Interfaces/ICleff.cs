@@ -1,4 +1,4 @@
-namespace Beathoven.Collection
+namespace Beathoven.Collection.Cleff
 {
     public interface ICleff
     {
