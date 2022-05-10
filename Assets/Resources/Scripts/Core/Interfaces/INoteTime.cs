@@ -1,8 +1,8 @@
 namespace Beathoven.Core.Time
 {
-    interface INoteTime
+    public interface INoteTime
     {
         TimeEnumeration timeEnumeration { get; set; }
-        string imagePath { get; set; }
+        string imagePath { get; }
     }
 }

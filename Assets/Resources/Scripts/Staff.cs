@@ -7,13 +7,15 @@ namespace Beathoven.Core.Staff
     using System.Linq;
     using Beathoven.Core.Cleff;
     using Beathoven.Utils;
+    using Beathoven.Core.Time;
 
     public class Staff : MonoBehaviour, IStaff
     {
 
-        const UInt16 NOTES_ON_STAFF = 26;
-        const UInt16 START_OF_PENTAGRAM = 6;
-        const UInt16 END_OF_PENTAGRAM = 16;
+        const ushort NOTES_ON_STAFF = 26;
+        const float DISTANCE_BETWEEN_LINES = 0.3f;
+        const ushort START_OF_PENTAGRAM = 6;
+        const ushort END_OF_PENTAGRAM = 16;
         List<IMusicNote> musicNotes = new List<IMusicNote>();
         NotesSequence notesSequence = new NotesSequence();
         CleffFactory factory = new CleffFactory();
@@ -21,15 +23,18 @@ namespace Beathoven.Core.Staff
         [SerializeField]
         CleffsEnumeration staffCleff;
 
+        public float GetDistanceBetweenLines()
+        {
+            return DISTANCE_BETWEEN_LINES;
+        }
+
         void Start()
         {
             ICleff cleff = factory.Create(staffCleff);
             SetMusicNotesOnStaff(cleff);
-        }
+            MusicNoteFacade facade = new MusicNoteFacade(new QuarterNoteTime());
+            facade.InstantiateNote(new Vector3(GetDistanceBetweenLines() * musicNotes[0].notePitch, 0, 0));
 
-        public void RenderStaff(IMusicNote note)
-        {
-            throw new System.NotImplementedException();
         }
 
         public void SetMusicNotesOnStaff(ICleff cleff)

@@ -1,6 +1,6 @@
 namespace Beathoven.Core.Time
 {
-    enum TimeEnumeration
+    public enum TimeEnumeration
     {
         Whole, Half, Quarter, Eighth, Sixteenth, ThirtySecond
     }

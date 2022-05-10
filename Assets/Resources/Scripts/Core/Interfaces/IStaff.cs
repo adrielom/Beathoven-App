@@ -6,7 +6,6 @@ namespace Beathoven.Core.Staff
 {
     public interface IStaff
     {
-        void RenderStaff(IMusicNote note);
         void SetMusicNotesOnStaff(ICleff cleff);
         List<IMusicNote> GetPentagramNotesList();
         List<IMusicNote> GetLowerNotesList();

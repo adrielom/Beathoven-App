@@ -1,4 +1,5 @@
 using Beathoven.Core.Note;
+using Beathoven.Core.Time;
 
 namespace Beathoven.Core.Notes
 {
@@ -20,5 +21,7 @@ namespace Beathoven.Core.Notes
         public bool isAccident { get; }
 
         public INoteAccident noteAccident { get; set; }
+        public INoteTime noteTime { get; set; }
+
     }
 }

@@ -2,6 +2,7 @@
 namespace Beathoven.Core.Notes
 {
     using Beathoven.Core.Note;
+    using Beathoven.Core.Time;
     using Unity;
     public interface IMusicNote
     {
@@ -9,6 +10,6 @@ namespace Beathoven.Core.Notes
         uint notePitch { get; set; }
         bool isAccident { get; }
         INoteAccident noteAccident { get; set; }
-
+        INoteTime noteTime { get; set; }
     }
 }

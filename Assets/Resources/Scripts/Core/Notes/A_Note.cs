@@ -1,4 +1,5 @@
 using Beathoven.Core.Note;
+using Beathoven.Core.Time;
 
 namespace Beathoven.Core.Notes
 {
@@ -19,6 +20,6 @@ namespace Beathoven.Core.Notes
         public uint notePitch { get; set; }
         public bool isAccident { get; } = false;
         public INoteAccident noteAccident { get; set; }
-
+        public INoteTime noteTime { get; set; }
     }
 }
