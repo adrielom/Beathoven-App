@@ -5,39 +5,48 @@ namespace Beathoven.Core.Staff
     using System.Collections.Generic;
     using System;
     using System.Linq;
-    using Beathoven.Core.Cleff;
+    using Beathoven.Core.Clef;
     using Beathoven.Utils;
     using Beathoven.Core.Time;
+    using Beathoven.Core.GuessNote;
 
     public class Staff : MonoBehaviour, IStaff
     {
 
-        const ushort NOTES_ON_STAFF = 26;
-        const float DISTANCE_BETWEEN_NOTES = 0.17f;
+        const ushort NOTES_ON_STAFF = 23;
+        const float DISTANCE_BETWEEN_NOTES = 0.225f;
         const ushort START_OF_PENTAGRAM = 6;
         const uint STARTING_PITCH = 1;
         const ushort END_OF_PENTAGRAM = 16;
         [SerializeField]
         GameObject firstLine, notesPoolGameObject;
+        [SerializeField]
+        SpriteRenderer cleffImage;
         List<IMusicNote> musicNotes = new List<IMusicNote>();
         NotesSequence notesSequence = new NotesSequence();
-        CleffFactory factory = new CleffFactory();
+        ClefFactory factory = new ClefFactory();
+        NoteRandomizer randomizer;
 
         [SerializeField]
-        CleffsEnumeration staffCleff;
+        ClefsEnumeration staffCleff;
 
         void Start()
         {
-            ICleff cleff = factory.Create(staffCleff);
-            SetMusicNotesOnStaff(cleff);
+            IClef clef = factory.Create(staffCleff);
+            SetMusicNotesOnStaff(clef);
             MusicNoteFacade facade = new MusicNoteFacade(new QuarterNoteTime(), notesPoolGameObject.transform);
-            IMusicNote note = musicNotes[10];
-            Debug.Log(GetMusicNoteOnStaffHeight(musicNotes.IndexOf(note)) + $" {note}");
+            randomizer = new NoteRandomizer(musicNotes);
+            IMusicNote note = randomizer.GetRandomNote();
+
+            print(note.ToString());
             facade.InstantiateNote(new Vector3(0, GetMusicNoteOnStaffHeight(musicNotes.IndexOf(note)), 0));
+
+
+
 
         }
 
-        public void SetMusicNotesOnStaff(ICleff cleff)
+        public void SetMusicNotesOnStaff(IClef cleff)
         {
             musicNotes = notesSequence.TraverseAndGetNotesStartingFromIndex(cleff.initialNote, NOTES_ON_STAFF);
             SetMusicNotesPitchesAccordingToCleff();
@@ -55,9 +64,19 @@ namespace Beathoven.Core.Staff
             }
         }
 
-        private float GetMusicNoteOnStaffHeight(int index)
+        private float GetMusicNoteOnStaffHeight(int noteIndexPosition)
         {
-            return ((DISTANCE_BETWEEN_NOTES * index) + firstLine.transform.position.y);
+            //0
+            // 0.15 * 0 + 4,05 - 0.15 = 3.9
+            //1
+            // 0.15 * 1 + 4.05 - 0.15 = 4.05
+            //2
+            // 0.15 * 2 + 4.05 - 0.15 = 4.2
+            //3
+            // 0.15 * 3 + 4.05 - 0.15 = 4.35
+            float initialNotePosition = firstLine.transform.position.y - DISTANCE_BETWEEN_NOTES;
+            float noteDistanceFromInitialPosition = (DISTANCE_BETWEEN_NOTES * noteIndexPosition);
+            return (noteDistanceFromInitialPosition + initialNotePosition);
 
         }
 

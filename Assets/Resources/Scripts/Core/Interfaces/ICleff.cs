@@ -1,8 +1,8 @@
-namespace Beathoven.Core.Cleff
+namespace Beathoven.Core.Clef
 {
-    public interface ICleff
+    public interface IClef
     {
-        void RenderCleff();
+        void RenderCleff(UnityEngine.SpriteRenderer renderer);
         string initialNote { get; set; }
     }
 
