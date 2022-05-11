@@ -37,6 +37,10 @@ namespace Beathoven.Core.Staff
             MusicNoteFacade facade = new MusicNoteFacade(new QuarterNoteTime(), notesPoolGameObject.transform);
             randomizer = new NoteRandomizer(musicNotes);
             IMusicNote note = randomizer.GetRandomNote();
+            IMusicNote anote = new A_Note();
+
+            print(anote.Equals(note));
+
 
             print(note.ToString());
             facade.InstantiateNote(new Vector3(0, GetMusicNoteOnStaffHeight(musicNotes.IndexOf(note)), 0));

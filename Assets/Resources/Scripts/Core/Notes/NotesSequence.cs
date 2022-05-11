@@ -7,12 +7,12 @@ namespace Beathoven.Core.Notes
 {
     class NotesSequence
     {
-        NotesEnumeration notesEnumeration;
+        NaturalNotesEnumeration notesEnumeration;
         NotesFactory notesFactory = new NotesFactory();
 
         public void TraverseSequence(string startingNote, int amountOfNotes, Action<int> iterationCallback)
         {
-            List<string> notesSequence = Enum.GetNames(typeof(NotesEnumeration)).ToList();
+            List<string> notesSequence = Enum.GetNames(typeof(NaturalNotesEnumeration)).ToList();
             int indexOfTargetNote = notesSequence.IndexOf(startingNote);
             int arrayIndexer = indexOfTargetNote;
 
@@ -32,7 +32,7 @@ namespace Beathoven.Core.Notes
 
             TraverseSequence(startingNote, amountOfNotes, (arrayIndexer) =>
             {
-                notes.Add(notesFactory.Create((NotesEnumeration)arrayIndexer));
+                notes.Add(notesFactory.Create((NaturalNotesEnumeration)arrayIndexer));
             });
             return notes;
 

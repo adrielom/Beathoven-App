@@ -2,25 +2,25 @@ namespace Beathoven.Core.Notes
 {
     using Beathoven.Utils;
 
-    class NotesFactory : AbstractFactory<IMusicNote, NotesEnumeration>
+    class NotesFactory : AbstractFactory<IMusicNote, NaturalNotesEnumeration>
     {
-        public override IMusicNote Create(NotesEnumeration notesEnumeration)
+        public override IMusicNote Create(NaturalNotesEnumeration notesEnumeration)
         {
             switch (notesEnumeration)
             {
-                case NotesEnumeration.A:
+                case NaturalNotesEnumeration.A:
                     return new A_Note();
-                case NotesEnumeration.B:
+                case NaturalNotesEnumeration.B:
                     return new B_Note();
-                case NotesEnumeration.C:
+                case NaturalNotesEnumeration.C:
                     return new C_Note();
-                case NotesEnumeration.D:
+                case NaturalNotesEnumeration.D:
                     return new D_Note();
-                case NotesEnumeration.E:
+                case NaturalNotesEnumeration.E:
                     return new E_Note();
-                case NotesEnumeration.F:
+                case NaturalNotesEnumeration.F:
                     return new F_Note();
-                case NotesEnumeration.G:
+                case NaturalNotesEnumeration.G:
                     return new G_Note();
                 default:
                     return new A_Note();

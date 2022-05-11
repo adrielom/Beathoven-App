@@ -22,9 +22,6 @@ namespace Beathoven.Core.Notes
 
         public string name { get; set; } = "E";
         public uint notePitch { get; set; }
-        public bool isAccident { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
-        public INoteAccident noteAccident { get; set; }
         public INoteTime noteTime { get; set; }
 
     }
