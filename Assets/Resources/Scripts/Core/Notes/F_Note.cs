@@ -14,6 +14,10 @@ namespace Beathoven.Core.Notes
             this.name = name;
             this.notePitch = notePitch;
         }
+        public override string ToString()
+        {
+            return $"Note: {notePitch}{name}\n";
+        }
 
         public string name { get; set; } = "F";
         public uint notePitch { get; set; }
