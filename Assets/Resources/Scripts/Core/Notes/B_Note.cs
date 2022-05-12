@@ -9,14 +9,18 @@ namespace Beathoven.Core.Notes
         {
         }
 
-        public override string ToString()
-        {
-            return $"Note: {notePitch}{name}\n";
-        }
-
         public string name { get; set; } = "B";
         public uint notePitch { get; set; }
         public INoteTime noteTime { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            return ((IMusicNote)obj).name == this.name;
+        }
+
+        public override string ToString()
+        {
+            return $"{notePitch}{name}";
+        }
     }
 }

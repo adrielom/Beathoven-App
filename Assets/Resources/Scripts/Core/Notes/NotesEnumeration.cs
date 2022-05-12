@@ -9,18 +9,18 @@ namespace Beathoven.Core.Notes
 
     public enum ChromaticNotesEnumeration
     {
-        A_Natural = 0,
-        A_Accident = 1,
-        B_Natural = 2,
-        C_Natural = 3,
-        C_Accident = 4,
-        D_Natural = 5,
-        D_Accident = 6,
-        E_Natural = 7,
-        F_Natural = 8,
-        F_Accident = 9,
-        G_Natural = 10,
-        G_Accident = 11,
+        A_Note = 0,
+        A_NoteAccident = 1,
+        B_Note = 2,
+        C_Note = 3,
+        C_NoteAccident = 4,
+        D_Note = 5,
+        D_NoteAccident = 6,
+        E_Note = 7,
+        F_Note = 8,
+        F_NoteAccident = 9,
+        G_Note = 10,
+        G_NoteAccident = 11,
     }
 
 }
