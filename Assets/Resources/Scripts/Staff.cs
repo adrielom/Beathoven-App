@@ -1,14 +1,12 @@
 namespace Beathoven.Core.Staff
 {
-    using Beathoven.Core.Notes;
     using UnityEngine;
+    using Beathoven.Core.Notes;
     using System.Collections.Generic;
-    using System;
-    using System.Linq;
     using Beathoven.Core.Clef;
-    using Beathoven.Utils;
     using Beathoven.Core.Time;
     using Beathoven.Core.GuessNote;
+    using Beathoven.Core.GameType;
 
     public class Staff : MonoBehaviour, IStaff
     {
@@ -25,29 +23,29 @@ namespace Beathoven.Core.Staff
         List<IMusicNote> musicNotes = new List<IMusicNote>();
         NotesSequence notesSequence = new NotesSequence();
         ClefFactory factory = new ClefFactory();
-        NoteRandomizer randomizer;
 
+        IGameType gameType;
         [SerializeField]
         ClefsEnumeration staffCleff;
 
-        void Start()
+        void Awake()
         {
             IClef clef = factory.Create(staffCleff);
             SetMusicNotesOnStaff(clef);
-            MusicNoteFacade facade = new MusicNoteFacade(new QuarterNoteTime(), notesPoolGameObject.transform);
-            randomizer = new NoteRandomizer(musicNotes);
-            IMusicNote note = randomizer.GetRandomNote();
-            IMusicNote anote = new A_Note();
+            gameType = new NoteGuesser(this);
+        }
 
-            print(anote.Equals(note));
+        public void SetNoteOnStaff(IMusicNote note, INoteTime time)
+        {
+            MusicNoteFacade facade = new MusicNoteFacade(time, notesPoolGameObject.transform, gameType);
 
-
-            print(note.ToString());
             facade.InstantiateNote(new Vector3(0, GetMusicNoteOnStaffHeight(musicNotes.IndexOf(note)), 0));
+        }
 
 
-
-
+        public List<IMusicNote> GetMusicNotes()
+        {
+            return musicNotes;
         }
 
         public void SetMusicNotesOnStaff(IClef cleff)
@@ -70,33 +68,11 @@ namespace Beathoven.Core.Staff
 
         private float GetMusicNoteOnStaffHeight(int noteIndexPosition)
         {
-            //0
-            // 0.15 * 0 + 4,05 - 0.15 = 3.9
-            //1
-            // 0.15 * 1 + 4.05 - 0.15 = 4.05
-            //2
-            // 0.15 * 2 + 4.05 - 0.15 = 4.2
-            //3
-            // 0.15 * 3 + 4.05 - 0.15 = 4.35
             float initialNotePosition = firstLine.transform.position.y - DISTANCE_BETWEEN_NOTES;
             float noteDistanceFromInitialPosition = (DISTANCE_BETWEEN_NOTES * noteIndexPosition);
             return (noteDistanceFromInitialPosition + initialNotePosition);
 
         }
 
-        public List<IMusicNote> GetPentagramNotesList()
-        {
-            return musicNotes.GetRange(START_OF_PENTAGRAM, 10);
-        }
-
-        public List<IMusicNote> GetLowerNotesList()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<IMusicNote> GetHigherNotesList()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

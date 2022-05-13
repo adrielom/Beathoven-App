@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using Beathoven.Core.Clef;
 using Beathoven.Core.Notes;
+using Beathoven.Core.Time;
 
 namespace Beathoven.Core.Staff
 {
     public interface IStaff
     {
         void SetMusicNotesOnStaff(IClef cleff);
-        List<IMusicNote> GetPentagramNotesList();
-        List<IMusicNote> GetLowerNotesList();
-        List<IMusicNote> GetHigherNotesList();
+        void SetNoteOnStaff(IMusicNote note, INoteTime time);
+        List<IMusicNote> GetMusicNotes();
     }
 
 }

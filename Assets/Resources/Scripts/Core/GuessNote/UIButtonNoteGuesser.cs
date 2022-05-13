@@ -8,6 +8,7 @@ namespace Beathoven.Core.GuessNote
     using Beathoven.Core.Note;
     using System.Collections.Generic;
     using UnityEngine.UI;
+    using Beathoven.Core.Staff;
 
     public class UIButtonNoteGuesser : MonoBehaviour
     {
@@ -17,6 +18,9 @@ namespace Beathoven.Core.GuessNote
         IMusicNote noteInstance;
         MusicNoteEnumerationParser parser = new MusicNoteEnumerationParser();
         Button UIButton;
+        [SerializeField]
+        public static Func<IMusicNote, bool> onMatchingNotes;
+        public static Action onRightNoteSelected;
 
         void Start()
         {
@@ -45,7 +49,17 @@ namespace Beathoven.Core.GuessNote
 
         void MatchNotes()
         {
-            Debug.Log("here");
+            Debug.Log($"Fired ${noteInstance.name} note");
+            if (onMatchingNotes?.Invoke(noteInstance) == true)
+            {
+                Debug.Log("Equal notes!");
+                onRightNoteSelected?.Invoke();
+            }
+            else
+            {
+                Debug.Log("Different notes!");
+
+            }
         }
 
     }
