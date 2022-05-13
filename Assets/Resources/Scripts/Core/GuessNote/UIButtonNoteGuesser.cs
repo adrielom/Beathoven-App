@@ -49,7 +49,6 @@ namespace Beathoven.Core.GuessNote
 
         void MatchNotes()
         {
-            Debug.Log($"Fired ${noteInstance.name} note");
             if (onMatchingNotes?.Invoke(noteInstance) == true)
             {
                 Debug.Log("Equal notes!");

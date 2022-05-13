@@ -5,6 +5,19 @@ namespace Beathoven.Core.Notes
 {
     public class B_NoteAccident : IMusicNote, INoteAccident
     {
+
+        public B_NoteAccident()
+        {
+            notePitch = 4;
+            noteTime = new QuarterNoteTime();
+        }
+
+        public B_NoteAccident(uint notePitch, INoteTime noteTime)
+        {
+            this.notePitch = notePitch;
+            this.noteTime = noteTime;
+
+        }
         public string name { get; set; } = "B";
         public uint notePitch { get; set; }
         public INoteTime noteTime { get; set; }

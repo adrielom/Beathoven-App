@@ -1,6 +1,6 @@
 namespace Beathoven.Core.GameType
 {
-    interface IGameType
+    public interface IGameType
     {
         uint notePoolCount { get; set; }
         void Initialize();

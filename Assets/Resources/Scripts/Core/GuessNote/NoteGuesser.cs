@@ -20,7 +20,6 @@ namespace Beathoven.Core.GuessNote
         {
             this.Staff = staff;
             this._musicNotes = staff.GetMusicNotes();
-            Initialize();
         }
 
         public void Initialize()
@@ -28,7 +27,7 @@ namespace Beathoven.Core.GuessNote
             RoundSelectedNote = GuessNote();
             UIButtonNoteGuesser.onMatchingNotes += MatchNotes;
             UIButtonNoteGuesser.onRightNoteSelected += RightNoteSelected;
-            Staff.SetNoteOnStaff(RoundSelectedNote, new QuarterNoteTime());
+            Staff.SetNoteOnStaff(RoundSelectedNote);
         }
 
         ~NoteGuesser()
@@ -40,7 +39,7 @@ namespace Beathoven.Core.GuessNote
         void RightNoteSelected()
         {
             RoundSelectedNote = GuessNote();
-            Staff.SetNoteOnStaff(RoundSelectedNote, new QuarterNoteTime());
+            Staff.SetNoteOnStaff(RoundSelectedNote);
         }
 
         public IMusicNote GuessNote()

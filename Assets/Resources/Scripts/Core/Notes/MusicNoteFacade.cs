@@ -9,36 +9,67 @@ namespace Beathoven.Core.Notes
 
     class MusicNoteFacade
     {
-        private readonly INoteTime _noteTime;
         private readonly Transform _staffTransform;
-        private readonly IGameType _gameType;
+        private readonly IStaff _staff;
         const string NOTE_PATH = "Prefabs/Note";
         const string NOTE_TIMES_fOLDER = "Images/SVGs/Notes";
-        public MusicNoteFacade(INoteTime noteTime, Transform staffTransform, IGameType gameType)
+        private IMusicNote _note;
+        public MusicNoteFacade(IMusicNote note, Transform staffTransform, IStaff staff)
         {
-            this._noteTime = noteTime;
+            this._note = note;
             this._staffTransform = staffTransform;
-            this._gameType = gameType;
+            this._staff = staff;
         }
 
         public GameObject InstantiateNote(Vector3 position)
         {
             GameObject freshNote = null;
-            if (_staffTransform.childCount + 1 >= _gameType.notePoolCount)
+            if (_staffTransform.childCount + 1 <= _staff.gameType.notePoolCount)
+            {
                 freshNote = GameObject.Instantiate(Resources.Load(NOTE_PATH, typeof(GameObject))) as GameObject;
+                SetNoteOverviewClass(_note, freshNote);
+                SetNoteSprite(freshNote);
+                SetNoteTransformPosition(position, freshNote);
+                SetNoteTransformParent(freshNote);
+            }
             else
+            {
                 freshNote = HandleObjectPooling();
-            Sprite sprite = Resources.Load($"{NOTE_TIMES_fOLDER}/{_noteTime.imagePath}", typeof(Sprite)) as Sprite;
-            freshNote.GetComponentInChildren<SpriteRenderer>().sprite = sprite;
-            freshNote.transform.position = position;
-            freshNote.transform.SetParent(_staffTransform);
+                SetNoteOverviewClass(_note, freshNote);
+                SetNoteTransformPosition(position, freshNote);
+            }
             return freshNote;
+
+        }
+
+        void SetNoteOverviewClass(IMusicNote note, GameObject freshNote)
+        {
+            NoteOverview overview = null;
+            overview = freshNote.GetComponent<NoteOverview>() == null ? freshNote.AddComponent<NoteOverview>() : freshNote.GetComponent<NoteOverview>();
+            overview.musicNote = note;
+        }
+
+        void SetNoteSprite(GameObject freshNote)
+        {
+            Sprite sprite = Resources.Load($"{NOTE_TIMES_fOLDER}/{_note.noteTime.imagePath}", typeof(Sprite)) as Sprite;
+            freshNote.GetComponentInChildren<SpriteRenderer>().sprite = sprite;
+        }
+
+        private void SetNoteTransformPosition(Vector3 position, GameObject freshNote)
+        {
+            freshNote.transform.position = position;
+        }
+
+        void SetNoteTransformParent(GameObject freshNote)
+        {
+            freshNote.transform.SetParent(_staffTransform);
         }
 
         private GameObject HandleObjectPooling()
         {
-            List<Transform> notesInPool = new List<Transform>(_staffTransform.GetComponentsInChildren<Transform>());
-            Transform randomElement = notesInPool[UnityEngine.Random.Range(0, notesInPool.Count)];
+
+            List<NoteOverview> notesInPool = new List<NoteOverview>(_staffTransform.GetComponentsInChildren<NoteOverview>());
+            Transform randomElement = notesInPool[UnityEngine.Random.Range(0, notesInPool.Count - 1)].transform;
             return randomElement.gameObject;
         }
     }

@@ -7,12 +7,14 @@ namespace Beathoven.Core.Notes
     {
         public G_Note()
         {
+            notePitch = 4;
+            noteTime = new QuarterNoteTime();
         }
 
-        public G_Note(string name, uint notePitch)
+        public G_Note(uint notePitch, INoteTime noteTime)
         {
-            this.name = name;
             this.notePitch = notePitch;
+            this.noteTime = noteTime;
         }
         public string name { get; set; } = "G";
         public uint notePitch { get; set; }

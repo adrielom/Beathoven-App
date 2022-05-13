@@ -16,6 +16,7 @@ namespace Beathoven.Core.Staff
         const ushort START_OF_PENTAGRAM = 6;
         const uint STARTING_PITCH = 1;
         const ushort END_OF_PENTAGRAM = 16;
+        public IGameType gameType { get; set; }
         [SerializeField]
         GameObject firstLine, notesPoolGameObject;
         [SerializeField]
@@ -24,7 +25,7 @@ namespace Beathoven.Core.Staff
         NotesSequence notesSequence = new NotesSequence();
         ClefFactory factory = new ClefFactory();
 
-        IGameType gameType;
+
         [SerializeField]
         ClefsEnumeration staffCleff;
 
@@ -33,11 +34,13 @@ namespace Beathoven.Core.Staff
             IClef clef = factory.Create(staffCleff);
             SetMusicNotesOnStaff(clef);
             gameType = new NoteGuesser(this);
+            gameType.Initialize();
         }
 
-        public void SetNoteOnStaff(IMusicNote note, INoteTime time)
+        public void SetNoteOnStaff(IMusicNote note)
         {
-            MusicNoteFacade facade = new MusicNoteFacade(time, notesPoolGameObject.transform, gameType);
+
+            MusicNoteFacade facade = new MusicNoteFacade(note, notesPoolGameObject.transform, this);
 
             facade.InstantiateNote(new Vector3(0, GetMusicNoteOnStaffHeight(musicNotes.IndexOf(note)), 0));
         }
