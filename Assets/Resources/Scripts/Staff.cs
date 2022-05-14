@@ -8,6 +8,7 @@ namespace Beathoven.Core.Staff
     using Beathoven.Core.GuessNote;
     using Beathoven.Core.GameType;
     using System;
+    using Beathoven.Core.ScoreSystem;
 
     public class Staff : MonoBehaviour, IStaff
     {
@@ -25,7 +26,8 @@ namespace Beathoven.Core.Staff
         List<IMusicNote> musicNotes = new List<IMusicNote>();
         NotesSequence notesSequence = new NotesSequence();
         ClefFactory factory = new ClefFactory();
-
+        [SerializeField]
+        ScoreState scoreState;
 
         [SerializeField]
         ClefsEnumeration staffCleff;
@@ -35,14 +37,9 @@ namespace Beathoven.Core.Staff
             IClef clef = factory.Create(staffCleff);
             clef.RenderCleff(cleffImage);
             SetMusicNotesOnStaff(clef);
-            int i = 0;
-            musicNotes.ForEach(f =>
-            {
-                Debug.Log($"{i} {f}");
-                i++;
-            });
             gameType = new NoteGuesser(this);
             gameType.Initialize();
+
         }
 
         public void SetNoteOnStaff(IMusicNote note)
