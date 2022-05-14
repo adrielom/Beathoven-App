@@ -30,14 +30,20 @@ namespace Beathoven.Core.ScoreSystem
         {
             _uIHeartAttemptManager = new UIHeartAttemptManager(_attemptsHeartsParentElement.GetComponentsInChildren<SVGImage>().ToList());
             Attempts = Configs.DEFAULT_GUESSING_ATTEMPTS;
-            UIButtonNoteGuesser.onRightNoteSelected += IncreaseScore;
-            UIButtonNoteGuesser.onWrongNoteSelected += ResetMultiplier;
-            UIButtonNoteGuesser.onWrongNoteSelected += DecreaseAttempts;
+            UIButtonNoteGuesser.onRightNoteSelected += HandleIncreaseScore;
+            UIButtonNoteGuesser.onWrongNoteSelected += HandleResetMultiplier;
+            UIButtonNoteGuesser.onWrongNoteSelected += HandleDecreaseAttempts;
+            UIButtonNoteGuesser.onWrongNoteSelected += HandleUpdateAttempstUI;
         }
 
         void Update()
         {
             UpdateUIText();
+        }
+
+        void HandleUpdateAttempstUI()
+        {
+            _uIHeartAttemptManager.UpdateHearts((int)Attempts);
         }
 
         void UpdateUIText()
@@ -46,19 +52,19 @@ namespace Beathoven.Core.ScoreSystem
             _multiplierText.text = _multiplier > 1 ? $"x{_multiplier}" : "";
         }
 
-        void IncreaseScore()
+        void HandleIncreaseScore()
         {
             if (_score % 10 == 0 && _multiplier <= 5) _multiplier++;
             uint amount = _multiplier == 0 ? 1 : 1 * _multiplier;
             _score += amount;
         }
 
-        void ResetMultiplier()
+        void HandleResetMultiplier()
         {
             _multiplier = 0;
         }
 
-        void DecreaseAttempts()
+        void HandleDecreaseAttempts()
         {
             _attempts--;
         }

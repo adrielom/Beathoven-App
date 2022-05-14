@@ -7,9 +7,9 @@ using UnityEngine;
 public class UIHeartAttemptManager
 {
     List<SVGImage> _hearts;
-    private SVGImage _fullHeart;
-    private SVGImage _halfHeart;
-    private SVGImage _emptyHeart;
+    private Sprite _fullHeart;
+    private Sprite _halfHeart;
+    private Sprite _emptyHeart;
 
     // <3 <3 <3 -> 3 corações = 6 tentativas; Attempt / 2
     // <3 <3 -> 2 corações = 4 tentativas; Attempt / 2
@@ -17,42 +17,46 @@ public class UIHeartAttemptManager
 
     public UIHeartAttemptManager(List<SVGImage> hearts)
     {
-        this._hearts = SetListToFullHearts(hearts);
-        this._hearts.ForEach(h =>
-        {
-            // Debug.Log(h.sprite.name);
-        });
-        _fullHeart = Resources.Load("Images/SVGs/UI/HeartEmpty", typeof(SVGImage)) as SVGImage;
-        _halfHeart = Resources.Load("Images/SVGs/UI/HeartEmpty", typeof(SVGImage)) as SVGImage;
-        _emptyHeart = Resources.Load("Images/SVGs/UI/HeartEmpty", typeof(SVGImage)) as SVGImage;
+        _fullHeart = Resources.Load("Images/SVGs/UI/heartFull", typeof(Sprite)) as Sprite;
+        _halfHeart = Resources.Load("Images/SVGs/UI/heartHalf", typeof(Sprite)) as Sprite;
+        _emptyHeart = Resources.Load("Images/SVGs/UI/heartEmpty", typeof(Sprite)) as Sprite;
+        this._hearts = hearts;
+        SetListToFullHearts();
     }
 
-    private List<SVGImage> SetListToFullHearts(List<SVGImage> hearts)
+    private void SetListToFullHearts()
     {
-        List<SVGImage> fullHeartsList = new List<SVGImage>();
-
-        for (int i = 0; i < hearts.Count; i++)
+        for (int i = 0; i < _hearts.Count; i++)
         {
-            fullHeartsList.Add(_fullHeart);
+            _hearts[i].sprite = _emptyHeart;
         }
-
-        return fullHeartsList;
     }
 
     public void UpdateHearts(int attempts)
     {
-        int heartStatesAtLastPosition = attempts % 2;
-        bool isLastElementHalfHeart = heartStatesAtLastPosition == 1;
-        int lastFullElement = attempts / 2;
+        int heartStateAtLastPosition = attempts % 2;
+        bool isLastElementHalfHeart = heartStateAtLastPosition == 1;
+        int lastFullElement = (int)(attempts / 2);
+        int lastElementThreshold = 0;
 
         for (var i = 0; i < lastFullElement; i++)
         {
-            this._hearts[i] = _fullHeart;
+            this._hearts[i].sprite = _fullHeart;
         }
 
         if (isLastElementHalfHeart)
         {
-            this._hearts[lastFullElement + 1] = _halfHeart;
+            this._hearts[lastFullElement].sprite = _halfHeart;
+            lastElementThreshold = lastFullElement + 1;
+        }
+        else
+        {
+            lastElementThreshold = lastFullElement;
+        }
+
+        for (var i = lastElementThreshold; i < _hearts.Count; i++)
+        {
+            this._hearts[i].sprite = _emptyHeart;
         }
     }
 }
