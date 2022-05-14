@@ -4,23 +4,32 @@ namespace Beathoven.Core.ScoreSystem
     using UnityEngine;
     using TMPro;
     using Beathoven.Utils;
+    using Unity.VectorGraphics;
+    using System.Linq;
 
     class ScoreState : MonoBehaviour
     {
-        [SerializeField]
-        TMP_Text scoreText;
-        [SerializeField]
-        TMP_Text multiplierText;
-        [SerializeField]
-        uint score;
-        [SerializeField]
-        uint multiplier;
-        [SerializeField]
-        uint attempts;
+        [SerializeField] private TMP_Text _scoreText;
+        [SerializeField] private TMP_Text _multiplierText;
+        [SerializeField] private uint _score;
+        [SerializeField] private uint _multiplier;
+        [SerializeField] private uint _attempts;
+        [SerializeField] private GameObject _attemptsHeartsParentElement;
+        private UIHeartAttemptManager _uIHeartAttemptManager;
+
+        public uint Attempts
+        {
+            get => _attempts; set
+            {
+                _attempts = value;
+                _uIHeartAttemptManager.UpdateHearts((int)_attempts);
+            }
+        }
 
         void Awake()
         {
-            attempts = Configs.DEFAULT_GUESSING_ATTEMPTS;
+            _uIHeartAttemptManager = new UIHeartAttemptManager(_attemptsHeartsParentElement.GetComponentsInChildren<SVGImage>().ToList());
+            Attempts = Configs.DEFAULT_GUESSING_ATTEMPTS;
             UIButtonNoteGuesser.onRightNoteSelected += IncreaseScore;
             UIButtonNoteGuesser.onWrongNoteSelected += ResetMultiplier;
             UIButtonNoteGuesser.onWrongNoteSelected += DecreaseAttempts;
@@ -28,25 +37,30 @@ namespace Beathoven.Core.ScoreSystem
 
         void Update()
         {
-            scoreText.text = score.ToString();
-            multiplierText.text = multiplier > 1 ? $"x{multiplier}" : "";
+            UpdateUIText();
+        }
+
+        void UpdateUIText()
+        {
+            _scoreText.text = _score.ToString();
+            _multiplierText.text = _multiplier > 1 ? $"x{_multiplier}" : "";
         }
 
         void IncreaseScore()
         {
-            if (score % 10 == 0 && multiplier <= 5) multiplier++;
-            uint amount = multiplier == 0 ? 1 : 1 * multiplier;
-            score += amount;
+            if (_score % 10 == 0 && _multiplier <= 5) _multiplier++;
+            uint amount = _multiplier == 0 ? 1 : 1 * _multiplier;
+            _score += amount;
         }
 
         void ResetMultiplier()
         {
-            multiplier = 0;
+            _multiplier = 0;
         }
 
         void DecreaseAttempts()
         {
-            attempts--;
+            _attempts--;
         }
     }
 }
