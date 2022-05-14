@@ -21,6 +21,7 @@ namespace Beathoven.Core.GuessNote
         [SerializeField]
         public static Func<IMusicNote, bool> onMatchingNotes;
         public static Action onRightNoteSelected;
+        public static Action onWrongNoteSelected;
 
         void Start()
         {
@@ -57,7 +58,7 @@ namespace Beathoven.Core.GuessNote
             else
             {
                 Debug.Log("Different notes!");
-
+                onWrongNoteSelected?.Invoke();
             }
         }
 
