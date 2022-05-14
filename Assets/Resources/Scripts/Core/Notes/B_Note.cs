@@ -3,7 +3,7 @@ using Beathoven.Core.Time;
 
 namespace Beathoven.Core.Notes
 {
-    public class B_Note : IMusicNote
+    public class B_Note : MusicNote
     {
         public B_Note()
         {
@@ -17,18 +17,19 @@ namespace Beathoven.Core.Notes
             this.noteTime = noteTime;
         }
 
-        public string name { get; set; } = "B";
-        public uint notePitch { get; set; }
-        public INoteTime noteTime { get; set; }
+        public override string name { get; set; } = "B";
+        public override uint notePitch { get; set; }
 
-        public override bool Equals(object obj)
-        {
-            return ((IMusicNote)obj).name == this.name;
-        }
+        public override INoteTime noteTime { get; set; }
 
-        public override string ToString()
-        {
-            return $"{notePitch}{name}";
-        }
+
+
+
+
+
+
+
+
+
     }
 }

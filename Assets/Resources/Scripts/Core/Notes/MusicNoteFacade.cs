@@ -13,8 +13,8 @@ namespace Beathoven.Core.Notes
         private readonly IStaff _staff;
         const string NOTE_PATH = "Prefabs/Note";
         const string NOTE_TIMES_fOLDER = "Images/SVGs/Notes";
-        private IMusicNote _note;
-        public MusicNoteFacade(IMusicNote note, Transform staffTransform, IStaff staff)
+        private MusicNote _note;
+        public MusicNoteFacade(MusicNote note, Transform staffTransform, IStaff staff)
         {
             this._note = note;
             this._staffTransform = staffTransform;
@@ -42,7 +42,7 @@ namespace Beathoven.Core.Notes
 
         }
 
-        void SetNoteOverviewClass(IMusicNote note, GameObject freshNote)
+        void SetNoteOverviewClass(MusicNote note, GameObject freshNote)
         {
             NoteOverview overview = null;
             overview = freshNote.GetComponent<NoteOverview>() == null ? freshNote.AddComponent<NoteOverview>() : freshNote.GetComponent<NoteOverview>();

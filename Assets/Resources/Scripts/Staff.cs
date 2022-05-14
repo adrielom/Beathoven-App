@@ -23,7 +23,7 @@ namespace Beathoven.Core.Staff
         GameObject firstLine, notesPoolGameObject;
         [SerializeField]
         SpriteRenderer cleffImage;
-        List<IMusicNote> musicNotes = new List<IMusicNote>();
+        List<MusicNote> musicNotes = new List<MusicNote>();
         NotesSequence notesSequence = new NotesSequence();
         ClefFactory factory = new ClefFactory();
         [SerializeField]
@@ -42,15 +42,15 @@ namespace Beathoven.Core.Staff
 
         }
 
-        public void SetNoteOnStaff(IMusicNote note)
+        public void SetNoteOnStaff(MusicNote note)
         {
             MusicNoteFacade facade = new MusicNoteFacade(note, notesPoolGameObject.transform, this);
-            Predicate<IMusicNote> predicate = (el) => el.name == note.name && el.notePitch == note.notePitch;
+            Predicate<MusicNote> predicate = (el) => el.name == note.name && el.notePitch == note.notePitch;
             facade.InstantiateNote(new Vector3(0, GetMusicNoteOnStaffHeight(musicNotes.FindIndex(predicate)), 0));
         }
 
 
-        public List<IMusicNote> GetMusicNotes()
+        public List<MusicNote> GetMusicNotes()
         {
             return musicNotes;
         }

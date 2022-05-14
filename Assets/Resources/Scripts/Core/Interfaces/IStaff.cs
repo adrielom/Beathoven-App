@@ -10,8 +10,8 @@ namespace Beathoven.Core.Staff
     {
         IGameType gameType { get; set; }
         void SetMusicNotesOnStaff(IClef cleff);
-        void SetNoteOnStaff(IMusicNote note);
-        List<IMusicNote> GetMusicNotes();
+        void SetNoteOnStaff(MusicNote note);
+        List<MusicNote> GetMusicNotes();
     }
 
 }

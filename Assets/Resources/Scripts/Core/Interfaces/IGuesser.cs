@@ -4,6 +4,6 @@ namespace Beathoven.Core.GuessNote
 {
     public interface IGuesser
     {
-        bool MatchNotes(IMusicNote noteA);
+        bool MatchNotes(MusicNote noteA);
     }
 }
