@@ -7,6 +7,7 @@ namespace Beathoven.Core.Staff
     using Beathoven.Core.Time;
     using Beathoven.Core.GuessNote;
     using Beathoven.Core.GameType;
+    using System;
 
     public class Staff : MonoBehaviour, IStaff
     {
@@ -32,17 +33,23 @@ namespace Beathoven.Core.Staff
         void Awake()
         {
             IClef clef = factory.Create(staffCleff);
+            clef.RenderCleff(cleffImage);
             SetMusicNotesOnStaff(clef);
+            int i = 0;
+            musicNotes.ForEach(f =>
+            {
+                Debug.Log($"{i} {f}");
+                i++;
+            });
             gameType = new NoteGuesser(this);
             gameType.Initialize();
         }
 
         public void SetNoteOnStaff(IMusicNote note)
         {
-
             MusicNoteFacade facade = new MusicNoteFacade(note, notesPoolGameObject.transform, this);
-
-            facade.InstantiateNote(new Vector3(0, GetMusicNoteOnStaffHeight(musicNotes.IndexOf(note)), 0));
+            Predicate<IMusicNote> predicate = (el) => el.name == note.name && el.notePitch == note.notePitch;
+            facade.InstantiateNote(new Vector3(0, GetMusicNoteOnStaffHeight(musicNotes.FindIndex(predicate)), 0));
         }
 
 
@@ -71,6 +78,7 @@ namespace Beathoven.Core.Staff
 
         private float GetMusicNoteOnStaffHeight(int noteIndexPosition)
         {
+            Debug.Log($"Selected index {noteIndexPosition}");
             float initialNotePosition = firstLine.transform.position.y - DISTANCE_BETWEEN_NOTES;
             float noteDistanceFromInitialPosition = (DISTANCE_BETWEEN_NOTES * noteIndexPosition);
             return (noteDistanceFromInitialPosition + initialNotePosition);

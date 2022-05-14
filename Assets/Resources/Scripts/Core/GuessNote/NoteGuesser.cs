@@ -46,7 +46,7 @@ namespace Beathoven.Core.GuessNote
         {
             _randomizer = new NoteRandomizer(_musicNotes);
             IMusicNote note = _randomizer.GetRandomNote();
-            Debug.Log($"Selected note is {note.name}");
+            Debug.Log($"Selected note is {note.ToString()}");
             return note;
         }
 

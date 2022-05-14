@@ -7,7 +7,7 @@ namespace Beathoven.Core.Notes
     {
         public G_NoteAccident()
         {
-            notePitch = 4;
+            notePitch = 2;
             noteTime = new QuarterNoteTime();
         }
         public G_NoteAccident(uint notePitch, INoteTime noteTime)

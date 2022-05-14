@@ -7,7 +7,7 @@ namespace Beathoven.Core.Clef
 
         public void RenderCleff(SpriteRenderer renderer)
         {
-            renderer.transform.position = new Vector3(-2.7f, 5.62f, 0);
+            renderer.transform.position = new Vector3(-2.3f, 3.82f, 0);
             renderer.sprite = Resources.Load("Images/SVGs/Clefs/FClef", typeof(Sprite)) as Sprite;
         }
     }

@@ -4,7 +4,6 @@ namespace Beathoven.Core.Notes
 
     class NoteOverview : MonoBehaviour
     {
-        [SerializeField]
         public IMusicNote musicNote;
     }
 }
