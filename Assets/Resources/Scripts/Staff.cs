@@ -25,6 +25,7 @@ namespace Beathoven.Core.Staff
         [SerializeField] private SpriteRenderer cleffImage;
         [SerializeField] private ScoreState scoreState;
         [SerializeField] private ClefsEnumeration staffCleff;
+        [SerializeField] private GameObject scene;
         private List<MusicNote> musicNotes = new List<MusicNote>();
         private NotesSequence notesSequence = new NotesSequence();
         private ClefFactory factory = new ClefFactory();
@@ -35,7 +36,7 @@ namespace Beathoven.Core.Staff
             IClef clef = factory.Create(staffCleff);
             clef.RenderCleff(cleffImage);
             SetMusicNotesOnStaff(clef);
-            gameType = new NoteGuesser(this);
+            gameType = new NoteGuesser(this, scene.GetComponent<Animator>());
             gameType.Initialize();
         }
 
