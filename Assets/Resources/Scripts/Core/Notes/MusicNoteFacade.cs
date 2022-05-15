@@ -9,16 +9,19 @@ namespace Beathoven.Core.Notes
 
     class MusicNoteFacade
     {
+        const string NOTE_TIMES_fOLDER = "Images/SVGs/Notes";
+        const string MATERIALS_fOLDER = "Materials";
         private readonly Transform _staffTransform;
         private readonly IStaff _staff;
         const string NOTE_PATH = "Prefabs/Note";
-        const string NOTE_TIMES_fOLDER = "Images/SVGs/Notes";
-        private IMusicNote _note;
-        public MusicNoteFacade(IMusicNote note, Transform staffTransform, IStaff staff)
+        private Material vectorMaterial;
+        private MusicNote _note;
+        public MusicNoteFacade(MusicNote note, Transform staffTransform, IStaff staff)
         {
             this._note = note;
             this._staffTransform = staffTransform;
             this._staff = staff;
+            this.vectorMaterial = Resources.Load($"{MATERIALS_fOLDER}/Unlit_Vector", typeof(Material)) as Material;
         }
 
         public GameObject InstantiateNote(Vector3 position)
@@ -42,7 +45,7 @@ namespace Beathoven.Core.Notes
 
         }
 
-        void SetNoteOverviewClass(IMusicNote note, GameObject freshNote)
+        void SetNoteOverviewClass(MusicNote note, GameObject freshNote)
         {
             NoteOverview overview = null;
             overview = freshNote.GetComponent<NoteOverview>() == null ? freshNote.AddComponent<NoteOverview>() : freshNote.GetComponent<NoteOverview>();
@@ -53,6 +56,8 @@ namespace Beathoven.Core.Notes
         {
             Sprite sprite = Resources.Load($"{NOTE_TIMES_fOLDER}/{_note.noteTime.imagePath}", typeof(Sprite)) as Sprite;
             freshNote.GetComponentInChildren<SpriteRenderer>().sprite = sprite;
+            freshNote.GetComponentInChildren<SpriteRenderer>().material = vectorMaterial;
+            freshNote.GetComponentInChildren<SpriteRenderer>().color = Color.black;
         }
 
         private void SetNoteTransformPosition(Vector3 position, GameObject freshNote)

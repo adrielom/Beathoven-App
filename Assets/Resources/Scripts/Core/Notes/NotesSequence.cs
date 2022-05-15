@@ -26,9 +26,9 @@ namespace Beathoven.Core.Notes
 
         }
 
-        public List<IMusicNote> TraverseAndGetNotesStartingFromIndex(string startingNote, int amountOfNotes)
+        public List<MusicNote> TraverseAndGetNotesStartingFromIndex(string startingNote, int amountOfNotes)
         {
-            List<IMusicNote> notes = new List<IMusicNote>();
+            List<MusicNote> notes = new List<MusicNote>();
 
             TraverseSequence(startingNote, amountOfNotes, (arrayIndexer) =>
             {

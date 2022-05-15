@@ -3,7 +3,7 @@ using Beathoven.Core.Time;
 
 namespace Beathoven.Core.Notes
 {
-    public class E_NoteAccident : IMusicNote, INoteAccident
+    public class E_NoteAccident : MusicNote, INoteAccident
     {
         public E_NoteAccident()
         {
@@ -15,15 +15,18 @@ namespace Beathoven.Core.Notes
             this.notePitch = notePitch;
             this.noteTime = noteTime;
         }
-        public string name { get; set; } = "E";
-        public uint notePitch { get; set; }
-        public INoteTime noteTime { get; set; }
+        public override string name { get; set; } = "E";
+        public override uint notePitch { get; set; }
+
+        public override INoteTime noteTime { get; set; }
+
+
         public string flat { get { return $"{name}b"; } }
         public string sharp { get { return $"{name}#"; } }
         public override bool Equals(object obj)
         {
-            bool condition = ((IMusicNote)obj).name == this.sharp ||
-                             ((IMusicNote)obj).name == this.flat;
+            bool condition = ((MusicNote)obj).name == this.sharp ||
+                             ((MusicNote)obj).name == this.flat;
             return condition;
         }
 

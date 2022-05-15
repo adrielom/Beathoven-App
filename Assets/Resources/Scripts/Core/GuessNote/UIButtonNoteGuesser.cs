@@ -15,11 +15,11 @@ namespace Beathoven.Core.GuessNote
         [SerializeField]
         ChromaticNotesEnumeration note;
         string className;
-        IMusicNote noteInstance;
+        MusicNote noteInstance;
         MusicNoteEnumerationParser parser = new MusicNoteEnumerationParser();
         Button UIButton;
         [SerializeField]
-        public static Func<IMusicNote, bool> onMatchingNotes;
+        public static Func<MusicNote, bool> onMatchingNotes;
         public static Action onRightNoteSelected;
         public static Action onWrongNoteSelected;
 

@@ -2,9 +2,9 @@ namespace Beathoven.Core.Notes
 {
     using Beathoven.Utils;
 
-    class NotesFactory : AbstractFactory<IMusicNote, NaturalNotesEnumeration>
+    class NotesFactory : AbstractFactory<MusicNote, NaturalNotesEnumeration>
     {
-        public override IMusicNote Create(NaturalNotesEnumeration notesEnumeration)
+        public override MusicNote Create(NaturalNotesEnumeration notesEnumeration)
         {
             switch (notesEnumeration)
             {

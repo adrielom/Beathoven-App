@@ -7,5 +7,7 @@ namespace Beathoven.Utils
         public const string DEFAULT_ACCIDENT = "sharp";
         public const uint DEFAULT_GUESSING_ATTEMPTS = 4;
         public const GameTypeEnumeration DEFAULT_GAME_TYPE = GameTypeEnumeration.NoteGuesser;
+        public const float DEFAULT_NOTE_FEEDBACK_TIMING = 1f;
+
     }
 }

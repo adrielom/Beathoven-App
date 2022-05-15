@@ -7,7 +7,7 @@ namespace Beathoven.Core.ScoreSystem
     using Unity.VectorGraphics;
     using System.Linq;
 
-    class ScoreState : MonoBehaviour
+    public class ScoreState : MonoBehaviour
     {
         [SerializeField] private TMP_Text _scoreText;
         [SerializeField] private TMP_Text _multiplierText;

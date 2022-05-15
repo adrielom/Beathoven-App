@@ -9,28 +9,26 @@ namespace Beathoven.Core.Staff
     using Beathoven.Core.GameType;
     using System;
     using Beathoven.Core.ScoreSystem;
+    using Beathoven.Core.FeedbackSystem;
+    using Beathoven.Utils;
 
     public class Staff : MonoBehaviour, IStaff
     {
 
-        const ushort NOTES_ON_STAFF = 23;
-        const float DISTANCE_BETWEEN_NOTES = 0.225f;
-        const ushort START_OF_PENTAGRAM = 6;
-        const uint STARTING_PITCH = 1;
-        const ushort END_OF_PENTAGRAM = 16;
         public IGameType gameType { get; set; }
-        [SerializeField]
-        GameObject firstLine, notesPoolGameObject;
-        [SerializeField]
-        SpriteRenderer cleffImage;
-        List<IMusicNote> musicNotes = new List<IMusicNote>();
-        NotesSequence notesSequence = new NotesSequence();
-        ClefFactory factory = new ClefFactory();
-        [SerializeField]
-        ScoreState scoreState;
-
-        [SerializeField]
-        ClefsEnumeration staffCleff;
+        private const ushort NOTES_ON_STAFF = 23;
+        private const float DISTANCE_BETWEEN_NOTES = 0.225f;
+        private const ushort START_OF_PENTAGRAM = 6;
+        private const uint STARTING_PITCH = 1;
+        private const ushort END_OF_PENTAGRAM = 16;
+        [SerializeField] private GameObject firstLine, notesPoolGameObject;
+        [SerializeField] private SpriteRenderer cleffImage;
+        [SerializeField] private ScoreState scoreState;
+        [SerializeField] private ClefsEnumeration staffCleff;
+        private List<MusicNote> musicNotes = new List<MusicNote>();
+        private NotesSequence notesSequence = new NotesSequence();
+        private ClefFactory factory = new ClefFactory();
+        private INoteFeedback noteFeedback = new NoteGuesserFeedback();
 
         void Awake()
         {
@@ -39,18 +37,19 @@ namespace Beathoven.Core.Staff
             SetMusicNotesOnStaff(clef);
             gameType = new NoteGuesser(this);
             gameType.Initialize();
-
         }
 
-        public void SetNoteOnStaff(IMusicNote note)
+        public void SetNoteOnStaff(MusicNote note)
         {
             MusicNoteFacade facade = new MusicNoteFacade(note, notesPoolGameObject.transform, this);
-            Predicate<IMusicNote> predicate = (el) => el.name == note.name && el.notePitch == note.notePitch;
-            facade.InstantiateNote(new Vector3(0, GetMusicNoteOnStaffHeight(musicNotes.FindIndex(predicate)), 0));
+            Predicate<MusicNote> predicate = (el) => el.name == note.name && el.notePitch == note.notePitch;
+            // StartCoroutine(Delayer.WaitFor(Configs.DEFAULT_NOTE_FEEDBACK_TIMING * 2));
+            GameObject freshNote = facade.InstantiateNote(new Vector3(0, GetMusicNoteOnStaffHeight(musicNotes.FindIndex(predicate)), 0));
+            noteFeedback.musicNoteGameObject = freshNote;
         }
 
 
-        public List<IMusicNote> GetMusicNotes()
+        public List<MusicNote> GetMusicNotes()
         {
             return musicNotes;
         }

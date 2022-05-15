@@ -2,19 +2,20 @@
 namespace Beathoven.Core.GuessNote
 {
     using System.Collections.Generic;
+    using Beathoven.Core.FeedbackSystem;
     using Beathoven.Core.GameType;
     using Beathoven.Core.Notes;
     using Beathoven.Core.Staff;
-    using Beathoven.Core.Time;
     using UnityEngine;
 
     class NoteGuesser : IGuesser, IGameType
     {
-        private readonly List<IMusicNote> _musicNotes;
+        private readonly List<MusicNote> _musicNotes;
         private NoteRandomizer _randomizer;
-        public static IMusicNote RoundSelectedNote { get; set; }
+        public static MusicNote RoundSelectedNote { get; set; }
         public IStaff Staff { get; set; }
         public uint notePoolCount { get; set; } = 1;
+        private INoteFeedback _noteFeedback;
 
         public NoteGuesser(IStaff staff)
         {
@@ -42,15 +43,15 @@ namespace Beathoven.Core.GuessNote
             Staff.SetNoteOnStaff(RoundSelectedNote);
         }
 
-        public IMusicNote GuessNote()
+        public MusicNote GuessNote()
         {
             _randomizer = new NoteRandomizer(_musicNotes);
-            IMusicNote note = _randomizer.GetRandomNote();
+            MusicNote note = _randomizer.GetRandomNote();
             Debug.Log($"Selected note is {note.ToString()}");
             return note;
         }
 
-        public bool MatchNotes(IMusicNote noteA)
+        public bool MatchNotes(MusicNote noteA)
         {
             return RoundSelectedNote.Equals(noteA);
         }

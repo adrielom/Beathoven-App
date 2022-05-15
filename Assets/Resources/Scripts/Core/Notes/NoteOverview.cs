@@ -4,6 +4,6 @@ namespace Beathoven.Core.Notes
 
     class NoteOverview : MonoBehaviour
     {
-        public IMusicNote musicNote;
+        public MusicNote musicNote;
     }
 }

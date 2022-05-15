@@ -11,10 +11,10 @@ namespace Beathoven.Core.Notes
             return Enum.GetName(typeof(ChromaticNotesEnumeration), enumeration);
         }
 
-        public IMusicNote NoteEnumerationToMusicNote(ChromaticNotesEnumeration enumeration)
+        public MusicNote NoteEnumerationToMusicNote(ChromaticNotesEnumeration enumeration)
         {
             string className = GetClassName(enumeration);
-            return (IMusicNote)Activator.CreateInstance(Type.GetType(notesNamespacePath + className));
+            return (MusicNote)Activator.CreateInstance(Type.GetType(notesNamespacePath + className));
         }
     }
 }
