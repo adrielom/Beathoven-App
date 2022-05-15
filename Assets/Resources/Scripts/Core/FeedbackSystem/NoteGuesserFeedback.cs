@@ -67,7 +67,7 @@ namespace Beathoven.Core.FeedbackSystem
         private void SetSpriteColor(Color color)
         {
             SpriteRenderer spriteRenderer = musicNoteGameObject.GetComponentInChildren<SpriteRenderer>();
-            Color initialColor = spriteRenderer.color;
+            Color initialColor = Color.black;
             spriteRenderer.color = color;
             spriteRenderer.DOColor(initialColor, DEFAULT_TIMING);
         }

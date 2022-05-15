@@ -6,16 +6,18 @@ namespace Beathoven.Core.ScoreSystem
     using Beathoven.Utils;
     using Unity.VectorGraphics;
     using System.Linq;
+    using Beathoven.Core.Staff;
 
     public class ScoreState : MonoBehaviour
     {
         [SerializeField] private TMP_Text _scoreText;
         [SerializeField] private TMP_Text _multiplierText;
-        [SerializeField] private uint _score;
         [SerializeField] private uint _multiplier;
         [SerializeField] private uint _attempts;
         [SerializeField] private GameObject _attemptsHeartsParentElement;
-        private UIHeartAttemptManager _uIHeartAttemptManager;
+        [SerializeField] private Staff staff;
+        [SerializeField] private GameObject scene;
+        public static uint Score { get; set; }
 
         public uint Attempts
         {
@@ -25,6 +27,7 @@ namespace Beathoven.Core.ScoreSystem
                 _uIHeartAttemptManager.UpdateHearts((int)_attempts);
             }
         }
+        private UIHeartAttemptManager _uIHeartAttemptManager;
 
         void Awake()
         {
@@ -34,6 +37,14 @@ namespace Beathoven.Core.ScoreSystem
             UIButtonNoteGuesser.onWrongNoteSelected += HandleResetMultiplier;
             UIButtonNoteGuesser.onWrongNoteSelected += HandleDecreaseAttempts;
             UIButtonNoteGuesser.onWrongNoteSelected += HandleUpdateAttempstUI;
+            NoteGuesser.OnInitialize += ResetState;
+        }
+
+        public void ResetState()
+        {
+            Attempts = Configs.DEFAULT_GUESSING_ATTEMPTS;
+            scene.GetComponent<Animator>().Play("InitialState");
+            Score = 0;
         }
 
         void Update()
@@ -48,15 +59,15 @@ namespace Beathoven.Core.ScoreSystem
 
         void UpdateUIText()
         {
-            _scoreText.text = _score.ToString();
+            _scoreText.text = Score.ToString();
             _multiplierText.text = _multiplier > 1 ? $"x{_multiplier}" : "";
         }
 
         void HandleIncreaseScore()
         {
-            if (_score % 10 == 0 && _multiplier <= 5) _multiplier++;
+            if (Score % 10 == 0 && _multiplier <= 5) _multiplier++;
             uint amount = _multiplier == 0 ? 1 : 1 * _multiplier;
-            _score += amount;
+            Score += amount;
         }
 
         void HandleResetMultiplier()
@@ -67,6 +78,10 @@ namespace Beathoven.Core.ScoreSystem
         void HandleDecreaseAttempts()
         {
             _attempts--;
+            if (_attempts <= 0)
+            {
+                staff.gameType.OnGameEnd();
+            }
         }
     }
 }

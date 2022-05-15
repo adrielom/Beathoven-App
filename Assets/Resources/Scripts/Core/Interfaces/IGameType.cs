@@ -4,5 +4,7 @@ namespace Beathoven.Core.GameType
     {
         uint notePoolCount { get; set; }
         void Initialize();
+        void OnGameEnd();
+
     }
 }
