@@ -32,7 +32,7 @@ namespace Beathoven.Core.Notes
 
             TraverseSequence(startingNote, amountOfNotes, (arrayIndexer) =>
             {
-                notes.Add(notesFactory.Create((NaturalNotesEnumeration)arrayIndexer));
+                notes.Add(notesFactory.Create((ChromaticNotesEnumeration)arrayIndexer));
             });
             return notes;
 

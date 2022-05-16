@@ -3,6 +3,7 @@ namespace Beathoven.Core.Notes
     using System;
     using System.Collections.Generic;
     using Beathoven.Core.GameType;
+    using Beathoven.Core.Note;
     using Beathoven.Core.Staff;
     using Beathoven.Core.Time;
     using UnityEngine;
@@ -10,18 +11,24 @@ namespace Beathoven.Core.Notes
     class MusicNoteFacade
     {
         const string NOTE_TIMES_fOLDER = "Images/SVGs/Notes";
+        const string ACCIDENTS_fOLDER = "Images/SVGs/Accidents";
+        const string NOTE = "Note";
+        const string ACCIDENT = "Accident";
         const string MATERIALS_fOLDER = "Materials";
         private readonly Transform _staffTransform;
         private readonly IStaff _staff;
         const string NOTE_PATH = "Prefabs/Note";
         private Material vectorMaterial;
         private MusicNote _note;
+        private Sprite _noteSprite, _accidentSprite;
         public MusicNoteFacade(MusicNote note, Transform staffTransform, IStaff staff)
         {
             this._note = note;
             this._staffTransform = staffTransform;
             this._staff = staff;
             this.vectorMaterial = Resources.Load($"{MATERIALS_fOLDER}/Unlit_Vector", typeof(Material)) as Material;
+            this._noteSprite = Resources.Load($"{NOTE_TIMES_fOLDER}/{_note.noteTime.imagePath}", typeof(Sprite)) as Sprite;
+
         }
 
         public GameObject InstantiateNote(Vector3 position)
@@ -39,6 +46,7 @@ namespace Beathoven.Core.Notes
             {
                 freshNote = HandleObjectPooling();
                 SetNoteOverviewClass(_note, freshNote);
+                SetNoteSprite(freshNote);
                 SetNoteTransformPosition(position, freshNote);
             }
             return freshNote;
@@ -54,8 +62,25 @@ namespace Beathoven.Core.Notes
 
         void SetNoteSprite(GameObject freshNote)
         {
-            Sprite sprite = Resources.Load($"{NOTE_TIMES_fOLDER}/{_note.noteTime.imagePath}", typeof(Sprite)) as Sprite;
-            freshNote.GetComponentInChildren<SpriteRenderer>().sprite = sprite;
+            SpriteRenderer[] renderers = freshNote.GetComponentsInChildren<SpriteRenderer>();
+            for (var i = 0; i < renderers.Length; i++)
+            {
+                if (renderers[i].name == NOTE)
+                {
+                    renderers[i].sprite = _noteSprite;
+                }
+                else if (renderers[i].name == ACCIDENT)
+                {
+                    if (!(_note is INoteAccident))
+                    {
+
+                        renderers[i].gameObject.SetActive(false);
+                    }
+                    _accidentSprite = Resources.Load($"{ACCIDENTS_fOLDER}/{((INoteAccident)_note).flat}", typeof(Sprite)) as Sprite;
+                    renderers[i].sprite = _accidentSprite;
+                }
+            }
+
             freshNote.GetComponentInChildren<SpriteRenderer>().material = vectorMaterial;
             freshNote.GetComponentInChildren<SpriteRenderer>().color = Color.black;
         }
