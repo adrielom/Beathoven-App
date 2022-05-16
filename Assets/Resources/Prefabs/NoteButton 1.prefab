@@ -246,7 +246,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: C#
+  m_text: C
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: eefdbb4214af7280bbb9abe7e3a25d00, type: 2}
   m_sharedMaterial: {fileID: 404059097708711514, guid: eefdbb4214af7280bbb9abe7e3a25d00, type: 2}

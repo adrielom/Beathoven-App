@@ -23,21 +23,28 @@ namespace Beathoven.Core.Staff
         private const ushort END_OF_PENTAGRAM = 16;
         [SerializeField] private GameObject firstLine, notesPoolGameObject;
         [SerializeField] private SpriteRenderer cleffImage;
-        [SerializeField] private ScoreState scoreState;
         [SerializeField] private ClefsEnumeration staffCleff;
         [SerializeField] private GameObject scene;
         private List<MusicNote> musicNotes = new List<MusicNote>();
         private NotesSequence notesSequence = new NotesSequence();
-        private ClefFactory factory = new ClefFactory();
         private INoteFeedback noteFeedback = new NoteGuesserFeedback();
+        public static IClef clef;
+        private ClefFactory factory;
 
         void Awake()
         {
-            IClef clef = factory.Create(staffCleff);
-            clef.RenderCleff(cleffImage);
+            SetClefInfo();
             SetMusicNotesOnStaff(clef);
             gameType = new NoteGuesser(this, scene.GetComponent<Animator>());
             gameType.Initialize();
+        }
+
+        private void SetClefInfo()
+        {
+            factory = new ClefFactory();
+            int selectedCleffIndex = PlayerPrefs.GetInt(Configs.DEFAULT_PLAYER_PREFS_KEY_SELECTED_CLEF, 0);
+            clef = factory.GetCleffByEnumerationIndex(selectedCleffIndex);
+            clef.RenderCleff(cleffImage);
         }
 
         public void SetNoteOnStaff(MusicNote note)
