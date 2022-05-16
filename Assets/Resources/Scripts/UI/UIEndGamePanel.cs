@@ -3,6 +3,7 @@ using Beathoven.Core.ScoreSystem;
 using Beathoven.Core.Staff;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIEndGamePanel : MonoBehaviour
@@ -12,6 +13,7 @@ public class UIEndGamePanel : MonoBehaviour
     void Awake()
     {
         PlayAgainButton.onClick.AddListener(PlayAgain);
+        HomeButton.onClick.AddListener(GoToHome);
     }
 
     void Update()
@@ -24,8 +26,8 @@ public class UIEndGamePanel : MonoBehaviour
         NoteGuesser.OnInitialize();
     }
 
-    void GoToHome()
+    public void GoToHome()
     {
-
+        SceneManager.LoadScene("HomeMenu");
     }
 }
