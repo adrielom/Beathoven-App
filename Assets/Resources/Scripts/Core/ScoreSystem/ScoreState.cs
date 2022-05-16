@@ -32,7 +32,7 @@ namespace Beathoven.Core.ScoreSystem
         void Awake()
         {
             _uIHeartAttemptManager = new UIHeartAttemptManager(_attemptsHeartsParentElement.GetComponentsInChildren<SVGImage>().ToList());
-            Attempts = Configs.DEFAULT_GUESSING_ATTEMPTS;
+            ResetState();
             UIButtonNoteGuesser.onRightNoteSelected += HandleIncreaseScore;
             UIButtonNoteGuesser.onWrongNoteSelected += HandleResetMultiplier;
             UIButtonNoteGuesser.onWrongNoteSelected += HandleDecreaseAttempts;
