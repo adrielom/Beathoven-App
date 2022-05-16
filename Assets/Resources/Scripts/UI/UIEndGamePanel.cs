@@ -1,6 +1,7 @@
 using Beathoven.Core.GuessNote;
 using Beathoven.Core.ScoreSystem;
 using Beathoven.Core.Staff;
+using Beathoven.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,7 +19,7 @@ public class UIEndGamePanel : MonoBehaviour
 
     void Update()
     {
-        scoreMessage.text = $"<b>Game Over!</b>\n\nYou got {ScoreState.Score} points!\n\n";
+        scoreMessage.text = $"<b>Game Over!</b>\n\nYou got {ScoreState.Score} points!\n\n Your top score is {PlayerPrefs.GetInt("TopScore")}";
     }
 
     void PlayAgain()
@@ -28,6 +29,6 @@ public class UIEndGamePanel : MonoBehaviour
 
     public void GoToHome()
     {
-        SceneManager.LoadScene("HomeMenu");
+        SceneManager.LoadScene(Configs.DEFAULT_ROUTE_HOME_MENU);
     }
 }

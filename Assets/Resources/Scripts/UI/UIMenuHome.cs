@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Beathoven.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,11 +19,11 @@ public class UIMenuHome : MonoBehaviour
 
     private void ConfigScene()
     {
-        SceneManager.LoadScene("Configuration");
+        SceneManager.LoadScene(Configs.DEFAULT_ROUTE_CONFIG_MENU);
     }
 
     private void StartGameScene()
     {
-        SceneManager.LoadScene("GuessNote");
+        SceneManager.LoadScene(Configs.DEFAULT_ROUTE_GUESS_NOTE);
     }
 }

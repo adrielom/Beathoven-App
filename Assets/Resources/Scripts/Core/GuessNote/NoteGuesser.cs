@@ -8,6 +8,7 @@ namespace Beathoven.Core.GuessNote
     using Beathoven.Core.Notes;
     using Beathoven.Core.ScoreSystem;
     using Beathoven.Core.Staff;
+    using Beathoven.Utils;
     using UnityEngine;
 
     class NoteGuesser : IGuesser, IGameType
@@ -35,7 +36,7 @@ namespace Beathoven.Core.GuessNote
             RoundSelectedNote = GuessNote();
             UIButtonNoteGuesser.onMatchingNotes += MatchNotes;
             UIButtonNoteGuesser.onRightNoteSelected += RightNoteSelected;
-            
+
             Staff.SetNoteOnStaff(RoundSelectedNote);
         }
 
@@ -66,7 +67,9 @@ namespace Beathoven.Core.GuessNote
 
         public void OnGameEnd()
         {
-            _animator.Play("EndGame");
+            if (PlayerPrefs.GetInt(Configs.DEFAULT_PLAYER_PREFS_KEY_TOP_SCORE, 0) < ScoreState.Score)
+                PlayerPrefs.SetInt(Configs.DEFAULT_PLAYER_PREFS_KEY_TOP_SCORE, (int)ScoreState.Score);
+            _animator.Play(Configs.DEFAULT_ANIMATION_KEY_END_GAME);
         }
     }
 }

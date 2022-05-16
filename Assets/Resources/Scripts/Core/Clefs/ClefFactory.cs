@@ -16,6 +16,12 @@ namespace Beathoven.Core.Clef
                 default:
                     return new C_Clef();
             }
+        }
+
+        public IClef GetCleffByEnumerationIndex(int index)
+        {
+            ClefsEnumeration clefsEnumeration = (ClefsEnumeration)index;
+            return Create(clefsEnumeration);
 
         }
     }
